@@ -10,10 +10,9 @@ from pages.login_page import LoginPage
     ("user.name@gmail.com", "  "),
     ("  ", "password"),
 ])
-def test_wrong_email_or_password_authorization(chromium_page: Page,email: str,password: str):
-    login_page = LoginPage(page=chromium_page)
+def test_wrong_email_or_password_authorization(login_page: LoginPage, email: str, password: str):
     login_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
-    login_page.fill_login_form(email=email,password=password)
+    login_page.fill_login_form(email=email, password=password)
     login_page.click_login_button()
     login_page.check_wrong_email_or_password_alert()
 
@@ -40,4 +39,3 @@ def test_wrong_email_or_password_authorization(chromium_page: Page,email: str,pa
     # wrong_email_or_password_alert = chromium_page.get_by_test_id("login-page-wrong-email-or-password-alert")
     # expect(wrong_email_or_password_alert).to_be_visible()
     # expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
-
