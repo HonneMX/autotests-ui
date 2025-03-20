@@ -31,3 +31,22 @@ class DashboardPage(BasePage):
     def check_dashboard_title_visible(self):
         expect(self.dashboard_toolbar_title).to_be_visible()
 
+    def check_students_widget_visible(self):
+        expect(self.student_widget_title).to_be_visible()
+        expect(self.student_widget_title).to_have_text('Students')
+        expect(self.student_widget_bar_char).to_be_visible()
+
+    def check_activities_widget_visible(self):
+        expect(self.activities_widget_title).to_be_visible()
+        expect(self.activities_widget_title).to_have_text('Activities')
+        expect(self.activities_widget_line_char).to_be_visible()
+
+    def check_courses_widget_visible(self):
+        expect(self.courses_widget_title).to_be_visible()
+        expect(self.courses_widget_title).to_have_text('Courses')
+        expect(self.courses_widget_pie_char).to_be_visible()
+
+    def check_scores_widget_visible(self):
+        expect(self.scores_widget_title).to_be_visible()
+        expect(self.scores_widget_title).to_have_text('Scores')
+        expect(self.scores_widget_scatter_char).to_be_visible()
