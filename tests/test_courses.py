@@ -4,10 +4,6 @@ import pytest
 
 @pytest.mark.courses
 @pytest.mark.regression
-# Работа над ошибками.
-# @pytest.mark.usefixtures(
-#     "initialize_browser_state"
-# )
 def test_empty_courses_list(chromium_page_with_state: Page):
     page = chromium_page_with_state
 

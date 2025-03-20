@@ -47,7 +47,7 @@ class CoursesListPage(BasePage):
             widget_title: str,
             max_score: str,
             min_score: str,
-            est_time: str
+            estimation_time: str
     ):
         expect(self.course_widget_image.nth(index)).to_be_visible()
 
@@ -61,7 +61,7 @@ class CoursesListPage(BasePage):
         expect(self.course_widget_min_score.nth(index)).to_have_text(f'Min score: {min_score}')
 
         expect(self.course_widget_estimated_time.nth(index)).to_be_visible()
-        expect(self.course_widget_estimated_time.nth(index)).to_have_text(f"Estimated time: {est_time}")
+        expect(self.course_widget_estimated_time.nth(index)).to_have_text(f"Estimated time: {estimation_time}")
 
     def click_edit_course(self, index: int):
         self.course_menu_button.nth(index).click()

@@ -65,7 +65,7 @@ class CreateCoursePage(BasePage):
         expect(self.preview_empty_view_description).to_be_visible()
         expect(self.preview_empty_view_description).to_have_text('Preview of selected image will be displayed here')
 
-    def check_visible_empty_view_image_loader(self, is_image_uploaded: bool = False):
+    def check_visible_image_upload_view(self, is_image_uploaded: bool = False):
         expect(self.preview_image_upload_empty_view_icon).to_be_visible()
 
         expect(self.preview_image_upload_empty_title).to_be_visible()
