@@ -1,22 +1,14 @@
-from playwright.sync_api import sync_playwright, expect, Page
 import pytest
 
+from pages.courses_list_page import CoursesListPage
 
 @pytest.mark.courses
 @pytest.mark.regression
-def test_empty_courses_list(chromium_page_with_state: Page):
-    page = chromium_page_with_state
+def test_empty_courses_list(courses_list_page: CoursesListPage):
+    courses_list_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses')
+    courses_list_page.sidebar.check_visible()
+    courses_list_page.navbar.check_visible('username')
+    courses_list_page.check_courses_list_title()
+    courses_list_page.check_visible_create_course_button()
+    courses_list_page.check_visible_empty_view()
 
-    # Открыть страницу "Courses" должна открыться без авторизации
-    page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses')
-
-    # Проверить наличие и текст заголовка "Courses"
-    courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
-    expect(courses_title).to_be_visible()
-    expect(courses_title).to_have_text('Courses')
-
-    # Проверить наличие и текст блока "There is no results"
-    result_text_block = page.get_by_test_id('courses-list-empty-view-title-text')
-    expect(result_text_block).to_be_visible()
-    expect(result_text_block).to_have_text('There is no results')
-    page.wait_for_timeout(5000)
