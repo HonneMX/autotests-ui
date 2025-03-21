@@ -1,3 +1,4 @@
+from navigation.navbar_component import NavbarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
@@ -6,18 +7,13 @@ class DashboardPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-
-        self.navigation_title_text = page.get_by_test_id('navigation-navbar-app-title-text')
-        self.navigation_welcome_title = page.get_by_test_id('navigation-navbar-welcome-title-text')
-
+        self.navbar = NavbarComponent(page)
 
         self.dashboard_list_item_title = page.get_by_test_id('dashboard-drawer-list-item-title-text').locator('span')
         self.courses_list_item_title = page.get_by_test_id('courses-drawer-list-item-title-text').locator('span')
         self.logout_button = page.get_by_test_id('logout-drawer-list-item-title-text').locator('span')
 
-
         self.dashboard_toolbar_title = page.get_by_test_id('dashboard-toolbar-title-text')
-
 
         self.student_widget_title = page.get_by_test_id('students-widget-title-text')
         self.student_widget_bar_char = page.get_by_test_id('students-bar-chart')
