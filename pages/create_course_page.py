@@ -1,6 +1,8 @@
 from playwright.sync_api import Page, expect
 
+from compoents.courses.create_course_exercise_form_component import CreateCourseExerciseFromComponent
 from compoents.views.empty_view_component import EmptyViewComponent
+from compoents.views.image_upload_widget_component import ImageUploadWidgetComponent
 from navigation.navbar_component import NavbarComponent
 from navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
@@ -12,25 +14,14 @@ class CreateCoursePage(BasePage):
 
         self.sidebar = SidebarComponent(page)
         self.navbar = NavbarComponent(page)
-        self.preview_empty_view = EmptyViewComponent(page, identifier='create-course-preview')
+
+        self.create_course_form= CreateCourseExerciseFromComponent(page)
+
+        self.image_upload_widget = ImageUploadWidgetComponent(page, identifier='create-course-preview')
         self.exercise_empty_view = EmptyViewComponent(page, identifier='create-course-exercises')
 
         self.create_course_title = page.get_by_test_id('create-course-toolbar-title-text')
         self.create_course_button = page.get_by_test_id('create-course-toolbar-create-course-button')
-
-        self.preview_loaded_image = page.get_by_test_id('create-course-preview-image-upload-widget-preview-image')
-
-        self.preview_image_upload_empty_view_icon = page.get_by_test_id(
-            'create-course-preview-image-upload-widget-info-icon')
-        self.preview_image_upload_empty_title = page.get_by_test_id(
-            'create-course-preview-image-upload-widget-info-title-text')
-        self.preview_image_upload_empty_recomended_size_image = page.get_by_test_id(
-            'create-course-preview-image-upload-widget-info-description-text')
-        self.preview_image_upload_image_button = page.get_by_test_id(
-            'create-course-preview-image-upload-widget-upload-button')
-        self.preview_image_remove_image_button = page.get_by_test_id(
-            'create-course-preview-image-upload-widget-remove-button')
-        self.preview_image_upload_input = page.get_by_test_id('create-course-preview-image-upload-widget-input')
 
         self.create_course_form_title_input = page.get_by_test_id('create-course-form-title-input').locator('input')
         self.create_course_form_estimate_time_input = page.get_by_test_id(
@@ -57,36 +48,6 @@ class CreateCoursePage(BasePage):
 
     def click_create_course_button(self):
         self.create_course_button.click()
-
-    def check_visible_image_preview_empty_view(self):
-        self.preview_empty_view.check_visible(
-            title='No image selected',
-            description='Preview of selected image will be displayed here'
-
-        )
-
-    def check_visible_image_upload_view(self, is_image_uploaded: bool = False):
-        expect(self.preview_image_upload_empty_view_icon).to_be_visible()
-
-        expect(self.preview_image_upload_empty_title).to_be_visible()
-        expect(self.preview_image_upload_empty_title).to_have_text('Tap on "Upload image" button to select file')
-
-        expect(self.preview_image_upload_empty_recomended_size_image).to_be_visible()
-        expect(self.preview_image_upload_empty_recomended_size_image).to_have_text('Recommended file size 540X300')
-
-        expect(self.preview_image_upload_image_button).to_be_visible()
-
-        if is_image_uploaded:
-            expect(self.preview_image_remove_image_button).to_be_visible()
-
-    def click_remove_image_button(self):
-        self.preview_image_remove_image_button.click()
-
-    def check_visible_preview_image(self):
-        expect(self.preview_loaded_image).to_be_visible()
-
-    def upload_preview_image(self, file: str):
-        self.preview_image_upload_input.set_input_files(file)
 
     def check_visible_create_course_form(
             self,
@@ -150,38 +111,4 @@ class CreateCoursePage(BasePage):
             description='Click on "Create exercise" button to create new exercise'
         )
 
-    def click_delete_exercises_button(self, index: int):
-        delete_exercise_button = self.page.get_by_test_id(
-            f'create-course-exercise-{index}-box-toolbar-delete-exercise-button')
-        delete_exercise_button.click()
 
-    def check_visible_create_exercise_form(self, index: int, title: str, description: str):
-        exercise_subtitle = self.page.get_by_test_id(f'create-course-exercise-{index}-box-toolbar-subtitle-text')
-
-        exercise_form_title_input = self.page.get_by_test_id(
-            f'create-course-exercise-form-title-{index}-input')
-
-        exercise_form_description_input = self.page.get_by_test_id(
-            f'create-course-exercise-form-description-{index}-input')
-
-        expect(exercise_subtitle).is_visible()
-        expect(exercise_subtitle).to_have_text(f"#{index + 1} Exercise")
-
-        expect(exercise_form_title_input).is_visible()
-        expect(exercise_form_title_input).to_have_text(title)
-
-        expect(exercise_form_description_input).is_visible()
-        expect(exercise_form_description_input).to_have_text(description)
-
-    def fill_create_exercise_form(self, index: int, title: str, description: str):
-        exercise_form_title_input = self.page.get_by_test_id(
-            f'create-course-exercise-form-title-{index}-input')
-
-        exercise_form_description_input = self.page.get_by_test_id(
-            f'create-course-exercise-form-description-{index}-input')
-
-        exercise_form_title_input.fill(title)
-        expect(exercise_form_title_input).to_have_value(title)
-
-        exercise_form_description_input.fill(description)
-        expect(exercise_form_description_input).to_have_value(description)
